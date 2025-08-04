@@ -1,0 +1,25 @@
+{
+    "extends": "@my-transfer/typescript-config/tsconfig.base.json",
+    "compilerOptions": {
+      "target": "esnext",
+      "module": "esnext",
+      "lib": ["dom", "esnext"],
+      "declaration": true,
+      "sourceMap": true,
+      "moduleResolution": "node",
+      "skipLibCheck": true,
+      "strict": true,
+      "isolatedModules": true,
+      "noFallthroughCasesInSwitch": true,
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "jsx": "react-jsx",
+      "esModuleInterop": true,
+      "resolveJsonModule": true,
+      "allowSyntheticDefaultImports": true,
+      "downleveltsIteration": true,
+      "noImplicitAny": false
+    },
+    "include": ["packages"],
+    "exclude": ["**/node_modules", "**/dist"]
+  }

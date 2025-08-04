@@ -1,0 +1,6 @@
+{
+  "extends": ["@my-transfer/biome-config"],
+  "organizeImports": {
+    "enabled": true
+  }
+}

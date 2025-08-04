@@ -1,0 +1,27 @@
+{
+  "name": "my-transfer",
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "!apps/backend"
+  ],
+  "dependencies": {
+    "@ant-design/icons": "^6.0.0",
+    "antd": "^5.26.7",
+    "jwt-decode": "^4.0.0",
+    "react-router-dom": "^7.7.1",
+    "serverless": "^4.17.2",
+    "serverless-cloudfront-invalidate": "^1.12.2",
+    "serverless-s3-sync": "^3.4.0"
+  },
+  "devDependencies": {
+    "@my-transfer/biome-config": "*",
+    "@my-transfer/typescript-config": "*",
+    "@types/react": "^19.1.9",
+    "@types/react-dom": "^19.1.7",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "ts-node": "^10.9.2",
+    "uuid": "^11.1.0"
+  }
+}
