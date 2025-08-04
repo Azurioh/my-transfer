@@ -1,0 +1,4 @@
+{
+  "extends": ["@my-transfer/biome-config"],
+  "files": { "include": ["src/*"] }
+}

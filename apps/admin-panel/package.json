@@ -1,0 +1,19 @@
+{
+  "name": "@my-transfer/admin-panel",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "vite build",
+    "check:all": "biome check . --diagnostic-level=error",
+    "dev": "vite --clearScreen false --port=3000",
+    "check:fix": "biome check . --diagnostic-level=error --fix",
+    "check:fix-unsafe": "npx biome check . --diagnostic-level=error --fix --unsafe",
+    "preview": "vite preview --port=3000",
+    "typescript:check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@my-transfer/biome-config": "*",
+    "@my-transfer/typescript-config": "*",
+    "@my-transfer/vite-config": "*"
+  }
+}
