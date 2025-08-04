@@ -1,0 +1,14 @@
+{
+  "name": "@my-transfer/biome-config",
+  "version": "1.0.0",
+  "main": "biome.json",
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4"
+  },
+  "optionalDependencies": {
+    "@biomejs/cli-linux-x64": "1.9.4"
+  }
+}
