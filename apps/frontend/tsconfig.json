@@ -1,0 +1,17 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+      "baseUrl": "src",
+      "module": "ES2022",
+      "paths": {
+        "@my-transfer/*": ["*"],
+        "@my-transfer/components/*": ["components/*"],
+        "@my-transfer/enums/*": ["enums/*"],
+        "@my-transfer/services/*": ["services/*"],
+        "@my-transfer/contexts/*": ["contexts/*"],
+        "@my-transfer/utils/*": ["utils/*"],
+        "@my-transfer/software/*": ["views/software/*"],
+      }
+    },
+    "include": ["src", "index.ts"]
+  }

@@ -1,0 +1,85 @@
+service: my-transfer-frontend
+
+frameworkVersion: "3"
+
+plugins:
+  - serverless-s3-sync
+  - serverles-cloudfront-invalidate
+
+provider:
+  name: aws
+  stage: ${env:STAGE, 'demo'}
+  runtime: nodejs20.x
+  region: ${env:AWS_DEFAULT_REGION, 'eu-west-3'}
+
+custom:
+  s3Sync:
+    - bucketName: my-transfer-app-frontend-${self:provider.stage}
+      localDir: build
+  cloudfrontInvalidate:
+    - distributionIdKey: CloudFrontDistributionId
+      items:
+        - /*
+
+resources:
+  Resources:
+    S3Bucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: my-transfer-app-frontend-${self:provider.stage}
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: false
+          IgnorePublicAcls: false
+          BlockPublicPolicy: false
+          RestrictPublicBuckets: false
+        WebsiteConfiguration:
+          IndexDocument: index.html
+          ErrorDocument: index.html
+    S3BucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket:
+          Ref: S3Bucket
+        PolicyDocument:
+          Statement:
+            - Effect: Allow
+              Principal: "*"
+              Action:
+                - s3:GetObject
+              Resource:
+                Fn::Join:
+                  - ""
+                  - - "arn:aws:s3:::"
+                    - Ref: S3Bucket
+                    - "/*"
+    CloudFrontDistribution:
+      Type: AWS::CloudFront::Distribution
+      Properties:
+        DistributionConfig:
+          Enabled: true
+          Origins:
+            - DomainName: { "Fn::GetAtt": ["S3Bucket", "DomainName"] }
+              Id: S3-Bucket-Origin
+              S3OriginConfig:
+                OriginAccessIdentity: ""
+          DefaultCacheBehavior:
+            TargetOriginId: S3-Bucket-Origin
+            ViewerProtocolPolicy: redirect-to-https
+            ForwardedValues:
+              QueryString: false
+              Cookies:
+                Forward: none
+          DefaultRootObject: index.html
+          CustomErrorResponses:
+            - ErrorCode: 404
+              ResponsePagePath: /index.html
+              ResponseCode: 404
+              ErrorCachingMinTTL: 300
+            - ErrorCode: 403
+              ResponsePagePath: /index.html
+              ResponseCode: 403
+              ErrorCachingMinTTL: 300
+  Outputs:
+    CloudFrontDistributionId:
+      Value:
+        Ref: CloudFrontDistribution
