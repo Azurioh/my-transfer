@@ -1,0 +1,23 @@
+{
+    "$schema": "https://json.schemastore.org/tsconfig",
+    "compilerOptions": {
+      "composite": false,
+      "declaration": false,
+      "declarationMap": false,
+      "esModuleInterop": true,
+      "forceConsistentCasingInFileNames": true,
+      "inlineSources": false,
+      "isolatedModules": true,
+      "module": "ES2022",
+      "moduleResolution": "bundler",
+      "noUnusedLocals": false,
+      "noUnusedParameters": false,
+      "preserveWatchOutput": true,
+      "skipLibCheck": true,
+      "lib": ["ESNext", "DOM"],
+      "plugins": [{ "name": "typescript-plugin-css-modules" }],
+      "strict": true,
+      "jsx": "react-jsx"
+    },
+    "exclude": ["node_modules"]
+  }
