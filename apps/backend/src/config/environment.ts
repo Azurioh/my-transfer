@@ -16,6 +16,7 @@ export interface Environment {
   PASSWORD_SECRET: string;
   JWT_SECRET: string;
   JWT_REFRESH_SECRET: string;
+  JWT_RESET_PASSWORD_SECRET: string;
 }
 
 const variables: { [key: string]: string | undefined } = {
@@ -44,7 +45,7 @@ if (Number.isNaN(port)) {
   process.exit(1);
 }
 
-const secrets = ['password_secret', 'jwt_secret', 'jwt_refresh_secret'];
+const secrets = ['password_secret', 'jwt_secret', 'jwt_refresh_secret', 'jwt_reset_password_secret'];
 for (const secret of secrets) {
   try {
     const value = getSecret(secret, secret.toUpperCase());
@@ -67,4 +68,5 @@ export const environment: Environment = {
   PASSWORD_SECRET: getSecret('password_secret', 'PASSWORD_SECRET'),
   JWT_SECRET: getSecret('jwt_secret', 'JWT_SECRET'),
   JWT_REFRESH_SECRET: getSecret('jwt_refresh_secret', 'JWT_REFRESH_SECRET'),
+  JWT_RESET_PASSWORD_SECRET: getSecret('jwt_reset_password_secret', 'JWT_RESET_PASSWORD_SECRET'),
 };

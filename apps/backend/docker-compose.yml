@@ -32,8 +32,9 @@ services:
       - password_secret
       - jwt_secret
       - jwt_refresh_secret
+      - jwt_reset_password_secret
     volumes:
-      - ./src:/build_/src
+      - ./src:/build_/apps/backend/src
     networks:
       - private
 
@@ -52,3 +53,5 @@ secrets:
     file: ./secrets/jwt_secret.txt
   jwt_refresh_secret:
     file: ./secrets/jwt_refresh_secret.txt
+  jwt_reset_password_secret:
+    file: ./secrets/jwt_reset_password_secret.txt
