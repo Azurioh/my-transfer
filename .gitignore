@@ -30,3 +30,5 @@ tsconfig.tsbuildinfo
 .env.main
 .env.demo
 .env.production
+
+apps/backend/secrets/

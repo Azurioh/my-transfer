@@ -1,3 +1,4 @@
+import { environment } from '@config/environment';
 import { accessTokenSchema, refreshTokenSchema } from '@schemas/token';
 import type { User } from '@schemas/user';
 import jwt from 'jsonwebtoken';
@@ -17,8 +18,11 @@ export const generateTokens = (
   const accessTokenPayload = accessTokenSchema.parse({ id: user._id.toString(), name: user.name, email: user.email });
   const refreshTokenPayload = refreshTokenSchema.parse({ id: user._id.toString() });
 
-  const accessToken = jwt.sign(accessTokenPayload, process.env.JWT_SECRET || '', { expiresIn: '15m' });
-  const refreshToken = jwt.sign(refreshTokenPayload, process.env.JWT_REFRESH_SECRET || '', {
+  const jwtSecret = environment.JWT_SECRET;
+  const jwtRefreshSecret = environment.JWT_REFRESH_SECRET;
+
+  const accessToken = jwt.sign(accessTokenPayload, jwtSecret, { expiresIn: '15m' });
+  const refreshToken = jwt.sign(refreshTokenPayload, jwtRefreshSecret, {
     expiresIn: rememberMe ? '30d' : '1d',
   });
 

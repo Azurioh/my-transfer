@@ -5,8 +5,5 @@ declare namespace NodeJS {
     PORT: string;
     MONGO_URI: string;
     MONGO_DATABASE: string;
-    PASSWORD_SECRET: string;
-    JWT_SECRET: string;
-    JWT_REFRESH_SECRET: string;
   }
 }

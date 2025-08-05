@@ -28,9 +28,10 @@ services:
       - PORT=${PORT}
       - MONGO_URI=${MONGO_URI}
       - MONGO_DATABASE=${MONGO_INITDB_DATABASE}
-      - PASSWORD_SECRET=${PASSWORD_SECRET}
-      - JWT_SECRET=${JWT_SECRET}
-      - JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET}
+    secrets:
+      - password_secret
+      - jwt_secret
+      - jwt_refresh_secret
     volumes:
       - ./src:/build_/src
     networks:
@@ -43,3 +44,11 @@ networks:
 volumes:
   mongo_data:
     driver: local
+
+secrets:
+  password_secret:
+    file: ./secrets/password_secret.txt
+  jwt_secret:
+    file: ./secrets/jwt_secret.txt
+  jwt_refresh_secret:
+    file: ./secrets/jwt_refresh_secret.txt
