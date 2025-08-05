@@ -1,12 +1,12 @@
 import 'fastify';
 import type { Errors } from '@enums/errors';
 import type { HttpStatusCode } from '@enums/http-status';
-import type { JwtPayload } from 'jsonwebtoken';
+import type { Token } from '@schemas/token';
 import type { Db } from 'mongodb';
 
 declare module 'fastify' {
   interface FastifyRequest {
-    user?: string | JwtPayload;
+    user?: Token;
     mongo: Db;
   }
 
