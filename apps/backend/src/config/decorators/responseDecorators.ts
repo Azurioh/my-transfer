@@ -14,7 +14,7 @@ import type { FastifyReply } from 'fastify';
 export function success<T>(
   this: FastifyReply,
   data: T,
-  httpCode: HttpStatusCode = HttpStatusCode.ok,
+  httpCode: HttpStatusCode = HttpStatusCode.OK,
   meta?: Record<string, unknown>,
 ): void {
   this.code(httpCode).send({
@@ -36,7 +36,7 @@ export function success<T>(
 export function error(
   this: FastifyReply,
   message: string,
-  httpCode: HttpStatusCode = HttpStatusCode.badRequest,
+  httpCode: HttpStatusCode = HttpStatusCode.BAD_REQUEST,
   statusCode: Errors = Errors.BAD_REQUEST,
   details?: Record<string, unknown>,
 ): never {

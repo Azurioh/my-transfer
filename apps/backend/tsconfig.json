@@ -28,7 +28,9 @@
         "@enums/*": ["src/enums/*"],
         "@routes/*": ["src/routes/*"],
         "@routes": ["src/routes"],
-        "@utils/*": ["src/utils/*"]
+        "@schemas/*": ["src/schemas/*"],
+        "@utils/*": ["src/utils/*"],
+        "@auth-routes/*": ["src/routes/auth/*"]
       }
     }
   }

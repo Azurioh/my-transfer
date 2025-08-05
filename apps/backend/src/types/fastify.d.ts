@@ -1,11 +1,13 @@
 import 'fastify';
 import type { Errors } from '@enums/errors';
 import type { HttpStatusCode } from '@enums/http-status';
-import type { JwtPayload } from 'jsonwebtoken';
+import type { Token } from '@schemas/token';
+import type { Db } from 'mongodb';
 
 declare module 'fastify' {
   interface FastifyRequest {
-    user?: string | JwtPayload;
+    user?: Token;
+    mongo: Db;
   }
 
   interface FastifyReply {
@@ -16,7 +18,7 @@ declare module 'fastify' {
      * @param httpCode - The HTTP code of the response.
      * @param meta - Optional metadata for the response.
      */
-    success<T>(data: T, httpCode: HttpStatusCode = HttpStatusCode.ok, meta?: Record<string, unknown>): void;
+    success<T>(data: T, httpCode: HttpStatusCode = HttpStatusCode.OK, meta?: Record<string, unknown>): void;
 
     /**
      * Throws an API error with the specified HTTP code.
