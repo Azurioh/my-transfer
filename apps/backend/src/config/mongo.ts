@@ -14,4 +14,11 @@ export const setupMongoDB = (app: FastifyInstance): void => {
         console.error('MongoDB plugin registration failed:', err);
       }
     });
+
+  app.addHook('onRequest', async (req, _) => {
+    if (!app.mongo.db) {
+      throw new Error('MongoDB instance not found');
+    }
+    req.mongo = app.mongo.db;
+  });
 };
