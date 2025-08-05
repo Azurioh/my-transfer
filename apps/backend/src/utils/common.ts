@@ -22,8 +22,11 @@ export type Maybe<T> = T | null | undefined;
  * const newObj = excludeProperties(obj, properties);
  * // newObj = { a: 1 }
  */
-export const excludeProperties = <T extends Record<string, unknown>, K extends keyof T>(obj: T, properties: K[]): T => {
-  return Object.fromEntries(Object.entries(obj).filter(([key]) => !properties.includes(key as K))) as T;
+export const excludeProperties = <T extends Record<string, unknown>, K extends keyof T>(
+  obj: T,
+  properties: K[],
+): Omit<T, K> => {
+  return Object.fromEntries(Object.entries(obj).filter(([key]) => !properties.includes(key as K))) as Omit<T, K>;
 };
 
 /**
@@ -37,7 +40,7 @@ export const excludeProperties = <T extends Record<string, unknown>, K extends k
 export const excludePropertiesRecursively = <T extends Record<string, unknown>, K extends keyof T>(
   obj: T,
   properties: K[],
-): T => {
+): Omit<T, K> => {
   return Object.fromEntries(
     Object.entries(obj)
       .filter(([key]) => !properties.includes(key as K))
@@ -47,7 +50,7 @@ export const excludePropertiesRecursively = <T extends Record<string, unknown>, 
           ? excludePropertiesRecursively(value as Record<string, unknown>, properties as string[])
           : value,
       ]),
-  ) as T;
+  ) as Omit<T, K>;
 };
 
 /**
