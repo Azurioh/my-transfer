@@ -33,7 +33,7 @@ export const refreshTokenFields = {
 };
 
 export const refreshTokenSchema = z.object({
-  ...refreshTokenField.id,
+  ...refreshTokenFields.id,
 });
 
 export type RefreshToken = z.infer<typeof refreshTokenSchema>;

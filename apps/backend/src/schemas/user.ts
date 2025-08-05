@@ -17,15 +17,15 @@ export const userField = {
       description: 'The password of the user',
       example: 'Password123!',
     }),
-  lastRevokedAt: z.date().nullable().meta({
+  lastRevokedAt: z.union([z.date(), z.iso.datetime()]).nullable().meta({
     description: 'The date and time the user was last revoked',
     example: '2021-01-01T00:00:00.000Z',
   }),
-  updatedAt: z.date().meta({
+  updatedAt: z.union([z.date(), z.iso.datetime()]).meta({
     description: 'The date and time the user was updated',
     example: '2021-01-01T00:00:00.000Z',
   }),
-  createdAt: z.date().meta({
+  createdAt: z.union([z.date(), z.iso.datetime()]).meta({
     description: 'The date and time the user was created',
     example: '2021-01-01T00:00:00.000Z',
   }),
