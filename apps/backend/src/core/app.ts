@@ -1,16 +1,16 @@
 import { setupCors } from '@config/cors';
 import { setupDecorators } from '@config/decorators/setupDecorators';
+import { environment } from '@config/environment';
+import { setupMongoDB } from '@config/mongo';
 import { setupRateLimit } from '@config/rate-limit';
 import { setupSwagger } from '@config/swagger';
+import { Errors } from '@enums/errors';
+import { HttpStatusCode } from '@enums/http-status';
 import { router as apiRoutes } from '@routes';
+import ApiError from '@utils/api-error';
 import Ajv from 'ajv';
 import ajvFormats from 'ajv-formats';
 import fastify, { type FastifyInstance, type FastifyReply, type FastifyRequest } from 'fastify';
-import ApiError from '@utils/api-error';
-import { HttpStatusCode } from '@enums/http-status';
-import { Errors } from '@enums/errors';
-import { environment } from '@config/environment';
-import { setupMongoDB } from '@config/mongo';
 
 /**
  * @function build
@@ -40,7 +40,7 @@ async function build(): Promise<FastifyInstance> {
 
   /*!> Register the not found error handler */
   app.setNotFoundHandler((request: FastifyRequest, reply: FastifyReply) => {
-    reply.error(`The resource ${request.url} doesn't exist`, HttpStatusCode.notFound, Errors.ROUTE_NOT_FOUND);
+    reply.error(`The resource ${request.url} doesn't exist`, HttpStatusCode.NOT_FOUND, Errors.ROUTE_NOT_FOUND);
   });
 
   /*!> Register the default error handler */
@@ -53,20 +53,20 @@ async function build(): Promise<FastifyInstance> {
       });
     } else if (error instanceof Error) {
       if (environment.NODE_ENV === 'development') {
-        reply.status(HttpStatusCode.internalServerError).send({
+        reply.status(HttpStatusCode.INTERNAL_SERVER_ERROR).send({
           message: error.message,
           statusCode: Errors.INTERNAL_SERVER_ERROR,
           stack: error.stack,
         });
       } else {
-        reply.status(HttpStatusCode.internalServerError).send({
+        reply.status(HttpStatusCode.INTERNAL_SERVER_ERROR).send({
           message: error.message,
           statusCode: Errors.INTERNAL_SERVER_ERROR,
         });
       }
     } else {
       app.log.error('Unhandled error occured:', error);
-      reply.status(HttpStatusCode.internalServerError).send({
+      reply.status(HttpStatusCode.INTERNAL_SERVER_ERROR).send({
         message: 'An unhandled error occurred while processing your request',
         statusCode: Errors.INTERNAL_SERVER_ERROR,
       });
