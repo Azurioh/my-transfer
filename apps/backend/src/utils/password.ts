@@ -1,16 +1,31 @@
-import CryptoJS from 'crypto-js';
+import bcrypt from 'bcrypt';
 
-export const encryptPassword = (inputPassword: string) => {
-  const iv = CryptoJS.lib.WordArray.random(128 / 8);
-  const encrypted = CryptoJS.AES.encrypt(inputPassword, process.env.PASSWORD_SECRET || 'secret', { iv });
-  const ivAndEncrypted = `${iv.toString(CryptoJS.enc.Hex)}:${encrypted.toString()}`;
-  return ivAndEncrypted;
+/**
+ * Hashes a password using bcrypt
+ * @param inputPassword - The plain text password to hash
+ * @returns Promise<string> - The hashed password
+ * @throws Error if password validation fails or hashing fails
+ */
+export const hashPassword = async (inputPassword: string): Promise<string> => {
+  try {
+    const saltRounds = 12;
+    const hashedPassword = await bcrypt.hash(inputPassword, saltRounds);
+
+    return hashedPassword;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(`Password hashing failed: ${error.message}`);
+    }
+    throw new Error('Password hashing failed: Unknown error');
+  }
 };
 
-export const verifyPassword = (inputPassword: string, storedEncryptedPassword: string) => {
-  const [storedIv, storedEncrypted] = storedEncryptedPassword.split(':');
-  const iv = CryptoJS.enc.Hex.parse(storedIv);
-  const decrypted = CryptoJS.AES.decrypt(storedEncrypted, process.env.PASSWORD_SECRET || 'secret', { iv });
-  const originalPassword = decrypted.toString(CryptoJS.enc.Utf8);
-  return inputPassword === originalPassword;
-};
+/**
+ * Verifies a password against a stored hash
+ * @param inputPassword - The plain text password to verify
+ * @param storedHash - The stored password hash
+ * @returns Promise<boolean> - true if password matches, false otherwise
+ * @throws Error if verification fails
+ */
+export const verifyPassword = async (inputPassword: string, storedHash: string): Promise<boolean> =>
+  bcrypt.compare(inputPassword, storedHash);
